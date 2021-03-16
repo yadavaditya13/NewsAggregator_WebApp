@@ -1,0 +1,293 @@
+ {% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>News Aggregator App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet"
+    href="{% static 'plugins/bootstrap/bootstrap.min.css' %}">
+    <!-- ThemeFisher Icon -->
+    <link rel="stylesheet" href="{% static 'plugins/themefisher-fonts/themefisher-fonts.css' %}">
+    <!-- Light Box -->
+    <link rel="stylesheet" href="{% static 'plugins/magnific-popup/magnific-popup.css' %}">
+    <!-- animation css -->
+    <link rel="stylesheet" href="{% static 'plugins/animate/animate.css' %}">
+    <!-- slick slider -->
+    <link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+    <!-- Revolution Slider -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map_canvas {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+    </style>
+    <script src="{% static 'plugins/modernizr.min.js' %}"></script>
+
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+</head>
+<body>
+
+    <!-- Loader to display before content Load-->
+  <div class="loading">
+
+      <div class="windows8 loading-position">
+      <div class="wBall" id="wBall_1">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_2">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_3">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_4">
+        <div class="wInnerBall"></div>
+      </div>
+      <div class="wBall" id="wBall_5">
+        <div class="wInnerBall"></div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Navigation -section
+  =========================-->
+<nav class="navbar navbar-fixed-top navigation" >
+  <div class="container">
+      <div class="text-center">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+        <img src="{% static 'images/20200410_202153_0000.png' %}" alt="">
+            <a href="{% url 'scrape' %}" class="btn btn-default btn-main">Get More News</a>
+        </div>
+
+    </div>
+
+       <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav navbar-right menu">
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+
+    <!-- Hero Area -section
+  =========================-->
+  <div class="hero-slider">
+    <div class="slider-item th-fullpage hero-area" style="background-image: url({% static 'images/slider/bg-3.jpg' %});">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">D.A.R. News Aggregator Project</h1>
+            <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">Your one-stop destination for all news </p>
+              <a href="{% url 'scrape' %}" class="btn btn-default btn-main">Fetch My News</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="slider-item th-fullpage hero-area" style="background-image: url({% static 'images/slider/bg-2.jpg' %});">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Stay Updated <br>Stay Ahead </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-item th-fullpage hero-area" style="background-image: url({% static 'images/slider/cover.png' %});">
+    </div>
+
+  </div>
+
+    <!-- Case Study Sections
+  =========================-->
+
+  <section class="case-study">
+    <div class="text-center">
+      <h2 class="title">News Headlines</h2>
+    </div>
+      <!-- Case Study Description
+      top section -->
+
+
+<!--    <div class="jumbotron">-->
+<!--        <center><h1>D.A.R. News Aggregator Project</h1>-->
+<!--            <a href="{% url 'scrape' %}" class="btn btn-success">Fetch My News</a>-->
+<!--        </form>-->
+<!--    </center>-->
+<!--    </div>-->
+<!--  <div class="card-columns" style="padding: 10px; margin: 20px;">-->
+    {% for object in object_list %}
+
+      <div class="case-study-content">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-6">
+            <!-- inner sub-title -->
+
+            <div class="content">
+              <h4 class="inner-title">{{object.title}}</h4>
+              <p class="case-description">{{object.content}}</p>
+
+              <!-- View More Details -->
+              <a class="btn btn-default btn-main" href=" {{object.url}} " target="_blank" role="button">View More</a>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="img-content">
+              <img class="img-responsive" src="{{object.image}}" alt="" style="height:300px;width:500px;">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+<!--    <div class="card" style="width: 18rem;border:5px black solid;">-->
+<!--  <img class="card-img-top" src = "{{ object.image }}">-->
+<!--  <div class="card-body">-->
+<!--    <h5 class="card-title"><div class="card-body">-->
+<!--      <a href="{{object.url}}"><h5 class="card-title">{{object.title}}</h5></a>-->
+<!--    </div></h5>-->
+<!--    </div>-->
+<!--  </div>-->
+  {% endfor %}
+<!--</div>-->
+<!--</div>-->
+</section>
+
+    <!-- Clients Logo Sections
+  =========================-->
+  <section class="clients-logo" data-parallax="scroll" data-image-src="images/slider/bg-1.jpg">
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 block text-center">
+            <img src="{% static 'images/clients-logo/toi.png' %}" s alt="Client Logo">
+          </div>
+          <div class="col-md-4 block text-center">
+            <img src="{% static 'images/clients-logo/hindu.jpg' %}" alt="Client Logo">
+          </div>
+          <div class="col-md-4 block text-center">
+            <img src="{% static 'images/clients-logo/times-of-india-logo.jpg' %}" alt="Client Logo">
+          </div>
+
+          <div class="col-md-4 block text-center">
+            <img src="{% static 'images/clients-logo/washingtonpost.jpg' %}" alt="Client Logo">
+          </div>
+          <div class="col-md-4 block text-center">
+            <img src="{% static 'images/clients-logo/nationalherald.jpg' %}" alt="Client Logo">
+          </div>
+          <div class="col-md-4 block text-center">
+            <img src="{% static 'images/clients-logo/hindustantimes.jpg' %}" alt="Client Logo">
+          </div>
+        </div><!-- /.End row -->
+      </div>
+    </div>
+  </section>
+
+    <!-- Contact Us Sections
+=========================-->
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="container">
+                    <div class="footer-top">
+                        <div class="col-md-4">
+                            <!-- footer About section
+                            ========================== -->
+                            <div class="footer-about">
+                                <h3 class="footer-title">About</h3>
+                                <p>This is a News-Aggregator app made using  <br>
+                                    Python3, Django, HTML, CSS and Javascript. <br>
+                                    This aggregates news from various sources <br>
+                                    and displays them to you at a single location.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- footer Address section
+                            ========================== -->
+                            <div class="footer-address">
+                                <h3 class="footer-title">Address</h3>
+                                <p>News World,
+                                   Mumbai - Maharashtra</p>
+                                <p class="contact-address">
+                                    Contact us : <a href="tel:+610383666274">+91 999 6666 333 </a> <br>
+                                    Write us : <a href="mailto:info@info.com">adi.divya@roma.mail.in</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- footer Media link section
+                            ========================== -->
+                            <div class="footer-social-media">
+                                <h3 class="footer-title">Keep in touch</h3>
+                                <ul class="footer-media-link">
+                                    <li><a href="#"><i class="tf-ion-social-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="tf-ion-social-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="tf-ion-social-linkedin-outline"
+                                                aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="tf-ion-social-google-outline" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li><a href="#"><i class="tf-ion-social-instagram-outline"
+                                                aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'plugins/jquery.min.js' %}"></script>
+
+    <script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
+    <!-- slick slider -->
+    <script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+    <!-- filter -->
+    <script src="{% static 'plugins/filterizr/jquery.filterizr.min.js' %}"></script>
+    <!-- Lightbox -->
+    <script src="{% static 'plugins/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <!-- Parallax -->
+    <script src="{% static 'plugins/parallax.min.js' %}"></script>
+    <!-- Video -->
+    <script src="{% static 'plugins/jquery.vide.js' %}"></script>
+    <!-- google map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+    <script src="{% static 'plugins/google-map/gmap.js' %}"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+<!--    <script-->
+<!--src="http://code.jquery.com/jquery-3.3.1.min.js"-->
+<!--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="-->
+<!--    crossorigin="anonymous"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+</body>
+</html>
